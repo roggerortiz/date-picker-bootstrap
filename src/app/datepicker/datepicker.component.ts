@@ -2,6 +2,7 @@ import { JsonPipe } from '@angular/common';
 import { Component, Injectable } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
+  NgbDatepickerConfig,
   NgbDatepickerI18n,
   NgbDatepickerModule,
   NgbDateStruct,
@@ -60,6 +61,14 @@ export class CustomDatepickerI18n extends NgbDatepickerI18n {
   }
 }
 
+@Injectable()
+export class CustomDatePickerConfig extends NgbDatepickerConfig {
+  constructor() {
+    super();
+    this.firstDayOfWeek = 7; // Set Sunday as the first day of the week
+  }
+}
+
 @Component({
   standalone: true,
   selector: 'app-datepicker',
@@ -68,6 +77,7 @@ export class CustomDatepickerI18n extends NgbDatepickerI18n {
   providers: [
     I18n,
     { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n },
+    { provide: NgbDatepickerConfig, useClass: CustomDatePickerConfig },
   ],
 })
 export class DatepickerComponent {
